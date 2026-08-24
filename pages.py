@@ -18,7 +18,7 @@ INDEX = """<section id="hero">
     <div class="hero-badge"><span class="dot"></span> NEW &middot; POSEIDON IS NOW ON THE T-EMBED CC1101 PLUS</div>
     <div class="hero-epithet">EVERY RADIO. ONE BOARD. NO HATS.</div>
     <h1 class="hero-title">POSEIDON</h1>
-    <p class="hero-sub">The pentest deck that stopped needing accessories. <span class="hl">Sub-GHz</span>, <span class="hl">2.4 GHz</span>, <span class="hl">NFC</span>, <span class="hl">IR</span>, <span class="hl">WiFi</span> and <span class="hl">BLE</span> &mdash; all soldered on, all on battery, all driven from one wheel. And it does something the Cardputer physically cannot: <span class="hl">it reads cards</span>.</p>
+    <p class="hero-sub">The pentest deck that stopped needing accessories. <span class="hl">Sub-GHz</span>, <span class="hl">2.4 GHz</span>, <span class="hl">NFC</span>, <span class="hl">IR</span>, <span class="hl">WiFi</span> and <span class="hl">BLE</span> &mdash; all soldered on, all on battery, all driven from one wheel. And it has a radio the Cardputer physically does not: <span class="hl">a real NFC reader</span>.</p>
     <div class="hero-prompt">
       <span class="prompt-dollar">poseidon &#9656;</span>
       <span class="prompt-cmd">nfc</span>
@@ -99,14 +99,26 @@ INDEX = """<section id="hero">
       <div class="t-arrow">Open the flasher &rarr;</div>
     </a>
   </div>
+
+  <div class="te-panel reveal" style="margin-top:2.5rem;border-color:rgba(251,191,36,.3);background:rgba(251,191,36,.05);">
+    <div style="font-family:var(--font-mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#fbbf24;margin-bottom:.6rem;">&#9680; STILL BEING TESTED &mdash; READ THIS BEFORE YOU GET EXCITED</div>
+    <p style="font-size:1rem;line-height:1.65;color:#e2e8f0;margin:0 0 1rem;">This is an <b style="color:#fbbf24;">active bring-up</b>, not a finished release, and the page says so on purpose. Two things on this board are written, compiling and flashed, but have <b style="color:#fbbf24;">never been proven against real hardware</b>:</p>
+    <div class="te-mono" style="border-color:rgba(251,191,36,.25);">
+      <div>NFC + EMV ......... <span class="w">UNTESTED</span>&nbsp;&nbsp;never seen a live tag or a real card</div>
+      <div>Sub-GHz on air .... <span class="w">UNTESTED</span>&nbsp;&nbsp;decoders repaired, but no fob has confirmed it</div>
+      <div>&nbsp;</div>
+      <div>everything else ... <span class="g">RUNNING ON THE BOARD</span></div>
+    </div>
+    <p style="font-size:.95rem;line-height:1.6;color:#cbd5e1;margin:1rem 0 0;">Boot, display, menus, encoder navigation, WiFi, BLE, SD and the LED ring are all confirmed working on the physical device. The <a href="status.html" style="color:#fbbf24;">status page</a> breaks it down subsystem by subsystem, and a card there only turns green once it has actually run &mdash; not when it compiles.</p>
+  </div>
 </section>
 """
 
 # ============================== NFC ==============================
 
 NFC = head("01 // THE T-EMBED EXCLUSIVE",
-           "It reads bank cards",
-           "This is the feature the Cardputer can never have, because the hardware simply is not there. The T-Embed carries a PN532 on its own I2C bus, and POSEIDON drives it with a hand-written reader plus a full contactless EMV stack on top.") + console(
+           "It reads cards. The Cardputer cannot.",
+           "This is the feature the Cardputer can never have, because the hardware simply is not there. The T-Embed carries a PN532 on its own I2C bus, and POSEIDON drives it with a hand-written reader plus a full contactless EMV stack on top. Fair warning up front: this stack is written and flashed but has NOT yet been validated against a live tag or a real card.") + console(
            ("chip", "pn532"), ("bus", "i2c 0x24"), ("band", "13.56 MHz"), ("modes", "tag / mifare / emv")) + """
 <section>
   <div class="reveal te-panel frame">
