@@ -15,10 +15,10 @@ INDEX = """<section id="hero">
   <canvas id="heroCanvas"></canvas>
   <canvas id="causticLayer"></canvas>
   <div class="hero-content">
-    <div class="hero-badge"><span class="dot"></span> FOR THE LILYGO T-EMBED CC1101 PLUS &middot; 5 RADIOS ONBOARD &middot; NO HATS</div>
-    <div class="hero-epithet">ONE BOARD, EVERY RADIO</div>
+    <div class="hero-badge"><span class="dot"></span> NEW &middot; POSEIDON IS NOW ON THE T-EMBED CC1101 PLUS</div>
+    <div class="hero-epithet">EVERY RADIO. ONE BOARD. NO HATS.</div>
     <h1 class="hero-title">POSEIDON</h1>
-    <p class="hero-sub">Encoder-driven pentesting firmware <span class="hl">for the LilyGO T-Embed CC1101 Plus</span>. Onboard <span class="hl">sub-GHz</span>, <span class="hl">2.4 GHz</span>, <span class="hl">NFC</span> and <span class="hl">IR</span>, plus WiFi and BLE. Nothing to plug in.</p>
+    <p class="hero-sub">The pentest deck that stopped needing accessories. <span class="hl">Sub-GHz</span>, <span class="hl">2.4 GHz</span>, <span class="hl">NFC</span>, <span class="hl">IR</span>, <span class="hl">WiFi</span> and <span class="hl">BLE</span> &mdash; all soldered on, all on battery, all driven from one wheel. And it does something the Cardputer physically cannot: <span class="hl">it reads cards</span>.</p>
     <div class="hero-prompt">
       <span class="prompt-dollar">poseidon &#9656;</span>
       <span class="prompt-cmd">nfc</span>
@@ -27,9 +27,9 @@ INDEX = """<section id="hero">
       <span class="prompt-cursor"></span>
     </div>
     <div class="hero-btns">
-      <a href="flash/" class="btn btn-primary">&#9889; Flash from your browser</a>
-      <a href="nfc.html" class="btn btn-secondary">&#9654; The NFC exclusive</a>
-      <a href="hardware.html" class="btn btn-secondary">&#8623; Inspect the board</a>
+      <a href="flash/" class="btn btn-primary">&#9889; Flash it right now</a>
+      <a href="nfc.html" class="btn btn-secondary">&#9654; See the NFC exclusive</a>
+      <a href="hardware.html" class="btn btn-secondary">&#8623; What the silicon is</a>
     </div>
     <div class="hero-stats">
       <div class="hero-stat"><div class="num" data-count="5">5</div><div class="label">Radios onboard</div></div>
@@ -63,19 +63,19 @@ INDEX = """<section id="hero">
 </div>
 
 <section id="explore">
-  <div class="section-label reveal" style="color:#22d3ee;">00 // NAVIGATE</div>
-  <h2 class="section-title reveal">Six sections, each its own page</h2>
-  <p class="section-desc reveal">Pick what you care about.</p>
+  <div class="section-label reveal" style="color:#22d3ee;">00 // THE DROP</div>
+  <h2 class="section-title reveal">Everything that landed with it</h2>
+  <p class="section-desc reveal">A full port, a new radio nobody else in the lineup has, an input model rebuilt from scratch, and five audit passes that gutted 47 real defects out of the firmware. Start anywhere.</p>
 
   <div class="teaser-grid">
     <a class="teaser reveal" href="nfc.html">
-      <div class="t-num">01 &middot; NFC</div><h3>The T-Embed exclusive.</h3>
-      <p>Tag identification, Mifare Classic dumping, and a contactless EMV reader on a full APDU transport. The Cardputer cannot do this at all.</p>
+      <div class="t-num">01 &middot; NFC</div><h3>The headline feature.</h3>
+      <p>A real 13.56 MHz reader onboard. Identify tags, dump Mifare Classic sectors to SD, and pull the number straight off a contactless bank card. No other board in the lineup can touch this.</p>
       <div class="t-arrow">Read it &rarr;</div>
     </a>
     <a class="teaser reveal" href="radios.html">
-      <div class="t-num">02 &middot; RADIOS</div><h3>Five, zero swapping.</h3>
-      <p>Sub-GHz, 2.4 GHz, NFC, IR, WiFi and BLE all soldered on and powered from an internal cell.</p>
+      <div class="t-num">02 &middot; RADIOS</div><h3>Five radios. Zero hats.</h3>
+      <p>Sub-GHz, 2.4 GHz, NFC, IR, WiFi and BLE, every one of them populated on the board and running off the internal cell. Change bands by turning a dial, not by opening your bag.</p>
       <div class="t-arrow">See the arsenal &rarr;</div>
     </a>
     <a class="teaser reveal" href="encoder.html">
@@ -84,7 +84,7 @@ INDEX = """<section id="hero">
       <div class="t-arrow">See the design &rarr;</div>
     </a>
     <a class="teaser reveal" href="hardened.html">
-      <div class="t-num">04 &middot; HARDENED</div><h3>47 defects closed.</h3>
+      <div class="t-num">04 &middot; HARDENED</div><h3>47 defects, gone.</h3>
       <p>Five adversarial audit passes. The interesting bugs were the ones that reported success and did nothing.</p>
       <div class="t-arrow">Read the findings &rarr;</div>
     </a>
@@ -94,8 +94,8 @@ INDEX = """<section id="hero">
       <div class="t-arrow">Inspect it &rarr;</div>
     </a>
     <a class="teaser reveal" href="flash/">
-      <div class="t-num">06 &middot; FLASH</div><h3>Put it on your board.</h3>
-      <p>Flash straight from Chrome or Edge over Web Serial. No toolchain, no install.</p>
+      <div class="t-num">06 &middot; FLASH</div><h3>Running in 30 seconds.</h3>
+      <p>Plug in, open Chrome, hit Connect. Web Serial flashes the whole image in about 25 seconds. No toolchain, no Python, no install.</p>
       <div class="t-arrow">Open the flasher &rarr;</div>
     </a>
   </div>
@@ -105,8 +105,8 @@ INDEX = """<section id="hero">
 # ============================== NFC ==============================
 
 NFC = head("01 // THE T-EMBED EXCLUSIVE",
-           "A card reader the Cardputer can never have",
-           "The board carries a PN532 on its own I2C bus. POSEIDON drives it with a self-contained reader, no external NFC library, and layers a contactless EMV reader on top.") + console(
+           "It reads bank cards",
+           "This is the feature the Cardputer can never have, because the hardware simply is not there. The T-Embed carries a PN532 on its own I2C bus, and POSEIDON drives it with a hand-written reader plus a full contactless EMV stack on top.") + console(
            ("chip", "pn532"), ("bus", "i2c 0x24"), ("band", "13.56 MHz"), ("modes", "tag / mifare / emv")) + """
 <section>
   <div class="reveal te-panel frame">
@@ -124,7 +124,7 @@ NFC = head("01 // THE T-EMBED EXCLUSIVE",
     </div>
   </div>
 
-  <h2 class="section-title reveal" style="margin-top:3rem;">Three readers, one chip</h2>
+  <h2 class="section-title reveal" style="margin-top:3rem;">Three readers on one chip</h2>
   <div class="feature-grid reveal">
     <div class="feature-card"><div class="fc-head"><span class="fc-glyph" style="color:#22d3ee;border-color:rgba(34,211,238,.4);"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z M4 9h16 M8 13h4"/></svg></span><h3 class="te-accent">Identify any 14443A tag</h3></div><p>UID of any length, ATQA and SAK on screen, and the family resolved from SAK: NTAG or Ultralight, Mifare Classic 1K and 4K, Plus, DESFire, JCOP, or plain ISO14443-4.</p><div class="count" style="color:#22d3ee;">READ</div></div>
     <div class="feature-card"><div class="fc-head"><span class="fc-glyph" style="color:#22d3ee;border-color:rgba(34,211,238,.4);"><svg viewBox="0 0 24 24"><path d="M6 4h9l3 3v13H6z M9 12h6 M9 15h6"/></svg></span><h3 class="te-accent">Dump Mifare Classic</h3></div><p>One press walks every sector with the common default keys, re-selecting the tag after each failed auth, and saves what it recovered as a raw .mfd file.</p><div class="count" style="color:#22d3ee;">DUMP</div></div>
@@ -138,8 +138,8 @@ NFC = head("01 // THE T-EMBED EXCLUSIVE",
 # ============================== RADIOS ==============================
 
 RADIOS = head("02 // NO HATS",
-              "Five radios, zero swapping",
-              "Most pocket decks borrow their radios from a hat, one band at a time, and you carry the hats. This board has them all populated and powered from an internal cell.") + console(
+              "Five radios. Nothing to plug in.",
+              "Every other pocket deck rents its radios from a hat, one band at a time, and makes you carry the hats. This one owns all of them. Sub-GHz, 2.4 GHz, NFC, IR, WiFi and BLE, populated on the board and running off the internal cell.") + console(
               ("subghz", "cc1101 300-928"), ("2g4", "nrf24l01+"), ("nfc", "pn532"),
               ("ir", "tx+rx"), ("wifi", "esp32-s3"), ("ble", "nimble")) + """
 <section>
@@ -157,7 +157,7 @@ RADIOS = head("02 // NO HATS",
 # ============================== ENCODER ==============================
 
 ENCODER = head("03 // BUILT FOR A DIAL",
-               "One wheel, three buttons, every feature",
+               "One wheel. Every single feature.",
                "This board has no keyboard. A rotary encoder emits five events and nothing else. Making a firmware with dozens of screens genuinely usable from that is its own design problem.") + """
 <section>
   <div class="reveal te-panel frame" style="border-color:rgba(217,70,239,.35);background:linear-gradient(135deg,rgba(217,70,239,.08) 0%,rgba(34,211,238,.04) 100%);">
@@ -186,8 +186,8 @@ ENCODER = head("03 // BUILT FOR A DIAL",
 # ============================== HARDENED ==============================
 
 HARDENED = head("04 // FIVE AUDIT PASSES",
-                "The bugs that looked like features working",
-                "Bringing the port up meant auditing the whole firmware, adversarially, one domain at a time. The interesting ones were never the crashes. They were the paths that ran, reported success, and did nothing.") + """
+                "47 defects went in the bin",
+                "Bringing the port up meant tearing through the entire firmware, adversarially, one domain at a time. The crashes were never the interesting part. The interesting part was everything that ran, reported success, printed a rising counter, and did absolutely nothing.") + """
 <section>
   <div class="reveal te-panel frame" style="border-color:rgba(110,231,183,.35);background:linear-gradient(135deg,rgba(110,231,183,.07) 0%,rgba(34,211,238,.04) 100%);">
     <div class="glow" style="background:radial-gradient(circle,rgba(110,231,183,.22) 0%,transparent 70%);"></div>
