@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Encoder &mdash; POSEIDON T-Embed</title>
+<meta name="description" content="One wheel and three buttons drive the whole firmware, including text entry on a character wheel.">
+<meta property="og:title" content="Encoder &mdash; POSEIDON T-Embed">
+<meta property="og:description" content="One wheel and three buttons drive the whole firmware, including text entry on a character wheel.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://generaldussduss.github.io/poseidon-tembed/assets/og.png">
+<meta name="theme-color" content="#06121f">
+<link rel="icon" href="assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.te-accent{color:#22d3ee}
+.te-panel{border:1px solid rgba(34,211,238,.32);border-radius:18px;background:linear-gradient(135deg,rgba(34,211,238,.08) 0%,rgba(14,165,233,.04) 100%);backdrop-filter:blur(6px);position:relative;overflow:hidden;padding:clamp(1.5rem,3vw,2.2rem)}
+.te-panel .glow{position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(34,211,238,.22) 0%,transparent 70%);pointer-events:none}
+.te-mono{font-family:var(--font-mono);font-size:.82rem;line-height:1.75;background:rgba(6,10,22,.6);border:1px solid rgba(34,211,238,.25);border-radius:12px;padding:1rem 1.2rem;color:#94a3b8;overflow-x:auto}
+.te-mono .g{color:#6ee7b7;font-weight:700}.te-mono .w{color:#fbbf24;font-weight:700}.te-mono .c{color:#22d3ee}
+.te-compare{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:1.5rem}
+.te-compare th,.te-compare td{text-align:left;padding:.7rem .9rem;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+.te-compare thead th{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#64748b}
+.te-compare tbody td:first-child{color:#cbd5e1;font-weight:500;width:26%}
+.te-compare .te-col{color:#7dd3fc}.te-compare .cp-col{color:#a3b4cf}
+.te-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1.5rem}
+.te-status{background:linear-gradient(180deg,var(--bg-raised),var(--bg-card));border:1px solid rgba(34,211,238,.12);border-radius:14px;padding:1.4rem 1.5rem;position:relative;overflow:hidden}
+.te-status::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%}
+.te-status.ready::before{background:#22c55e;box-shadow:0 0 12px rgba(34,197,94,.4)}
+.te-status.bring::before{background:#fbbf24;box-shadow:0 0 12px rgba(251,191,36,.4)}
+.te-status .st{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.te-status.ready .st{color:#22c55e}.te-status.bring .st{color:#fbbf24}
+.te-status h4{font-family:var(--font-display);font-size:1rem;color:#e2e8f0;margin-bottom:.5rem;letter-spacing:.03em}
+.te-status p{font-size:.9rem;color:#a3b4cf;line-height:1.55}
+.spec-row{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.9rem}
+.spec-row .k{color:#cbd5e1;font-weight:500}
+.spec-row .v{color:#7dd3fc;font-family:var(--font-mono);font-size:.82rem;text-align:right}
+#videoSplash{position:fixed;inset:0;z-index:10001;background:#000;display:flex;align-items:center;justify-content:center;opacity:1;transition:opacity .6s ease}
+#videoSplash.done{opacity:0;pointer-events:none}
+#videoSplash video,#videoSplash img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block}
+#splashSkip{position:fixed;bottom:18px;right:18px;z-index:10002;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.16em;color:#7dd3fc;background:rgba(4,10,20,.6);border:1px solid rgba(34,211,238,.5);border-radius:8px;padding:.4rem .8rem;cursor:pointer;opacity:.7}
+#splashSkip:hover{opacity:1;box-shadow:0 0 14px rgba(34,211,238,.35)}
+@media(prefers-reduced-motion:reduce){#videoSplash{display:none}}
+</style>
+</head>
+<body data-matrix>
+
+<div id="bootOverlay">
+  <div class="boot-trident">&#128305;</div>
+  <div class="boot-logo">T-EMBED</div>
+  <div class="boot-lines"><div class="boot-line"><span class="dim">[BOOT]</span> one board, every radio <span class="ok">OK</span></div></div>
+</div>
+
+<div id="scrollProgress"></div>
+<div id="hud"><div class="hud-row"><span class="hud-dot"></span>T-EMBED CC1101 PLUS &middot; 5 RADIOS ONBOARD</div></div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo"><span class="icon">P</span><span>POSEIDON &middot; T-EMBED</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="nfc.html">NFC</a></li>
+    <li><a href="radios.html">Radios</a></li>
+    <li><a href="encoder.html" class="active">Encoder</a></li>
+    <li><a href="hardened.html">Hardened</a></li>
+    <li><a href="hardware.html">Hardware</a></li>
+    <li><a href="status.html">Status</a></li>
+    <li><a href="flash/">Flash</a></li>
+    <li><a href="https://generaldussduss.github.io/poseidon/" target="_blank" rel="noopener">Cardputer</a></li>
+    <li><a href="https://github.com/GeneralDussDuss/poseidon" target="_blank" rel="noopener">GitHub</a></li>
+  </ul>
+</nav>
+
+<header class="page-head">
+  <div class="kicker">03 // BUILT FOR A DIAL</div>
+  <h1>One wheel, three buttons, every feature</h1>
+  <p class="lede">This board has no keyboard. A rotary encoder emits five events and nothing else. Making a firmware with dozens of screens genuinely usable from that is its own design problem.</p>
+</header>
+
+<section>
+  <div class="reveal te-panel frame" style="border-color:rgba(217,70,239,.35);background:linear-gradient(135deg,rgba(217,70,239,.08) 0%,rgba(34,211,238,.04) 100%);">
+    <div class="glow" style="background:radial-gradient(circle,rgba(217,70,239,.25) 0%,transparent 70%);"></div>
+    <div style="font-family:var(--font-mono);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:#d946ef;margin-bottom:.5rem;">&#9670; THE GESTURE VOCABULARY</div>
+    <div class="te-mono" style="border-color:rgba(217,70,239,.25);">
+      <div>turn ................ move / tune / scroll a character wheel</div>
+      <div>press ............... select, or the primary action</div>
+      <div>double-press ........ back</div>
+      <div>hold ................ <span class="c">ACTIONS</span> &mdash; the full menu for that screen</div>
+      <div>side button ......... back, always, from anywhere</div>
+    </div>
+    <p style="font-size:1rem;line-height:1.6;color:#e2e8f0;margin:1rem 0 0;">Hold is the key idea. Any screen that used to hide its actions behind letter keys now surfaces them in a modal list, which means <b style="color:#f0abfc;">every feature is reachable</b>.</p>
+  </div>
+
+  <h2 class="section-title reveal" style="margin-top:3rem;">What that unlocked</h2>
+  <p class="section-desc reveal">Before this work, fifteen features were physically impossible to use on this board. Not buggy &mdash; unreachable.</p>
+  <div class="feature-grid reveal">
+    <div class="feature-card" style="border-color:rgba(217,70,239,.3);"><div class="fc-head"><span class="fc-glyph" style="color:#d946ef;border-color:rgba(217,70,239,.4);"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z M8 10h8 M8 14h5"/></svg></span><h3 style="color:#f0abfc;">Text entry on a wheel</h3></div><p>Turn to scroll a character wheel, press to commit, hold for backspace or done. SSIDs, passwords, hex payloads and filenames all work without a keyboard. Before this, every text prompt could only ever return an empty string.</p><div class="count" style="color:#d946ef;">INPUT</div></div>
+    <div class="feature-card" style="border-color:rgba(217,70,239,.3);"><div class="fc-head"><span class="fc-glyph" style="color:#d946ef;border-color:rgba(217,70,239,.4);"><svg viewBox="0 0 24 24"><path d="M4 5h16v4H4z M4 11h16v4H4z M4 17h10v3H4z"/></svg></span><h3 style="color:#f0abfc;">Actions menu everywhere</h3></div><p>Hold on any screen for its real action list &mdash; deauth, save, replay, tune, dump &mdash; as a scrollable modal instead of a footer naming keys the board does not have.</p><div class="count" style="color:#d946ef;">HOLD</div></div>
+    <div class="feature-card" style="border-color:rgba(217,70,239,.3);"><div class="fc-head"><span class="fc-glyph" style="color:#d946ef;border-color:rgba(217,70,239,.4);"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 7v5l3 2"/></svg></span><h3 style="color:#f0abfc;">A ring that tells you things</h3></div><p>Eight WS2812 pixels around the dial: an aurora at rest, counter-rotating sweeps while scanning, hot flares under attack, and a live signal-strength meter.</p><div class="count" style="color:#d946ef;">FEEDBACK</div></div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="foot-glyph">&#10208;</div>
+  <div class="suite-label">PART OF THE SUITE</div>
+  <div class="suite-links">
+    <a href="https://generaldussduss.github.io/poseidon/">POSEIDON (CARDPUTER)</a>
+    <a href="https://generaldussduss.github.io/suite/">THE SUITE</a>
+    <a href="https://generaldussduss.github.io/faceless/">FACELESS</a>
+  </div>
+  <div class="copy">&copy; 2026 POSEIDON T-EMBED &mdash; commander of the deep &mdash; MIT</div>
+</footer>
+
+<canvas id="particles" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></canvas>
+<script src="assets/site.js"></script>
+</body>
+</html>

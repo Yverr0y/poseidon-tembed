@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hardware &mdash; POSEIDON T-Embed</title>
+<meta name="description" content="Verified pin map for the LilyGO T-Embed CC1101 Plus, the shared-SPI reality, and a comparison against the Cardputer.">
+<meta property="og:title" content="Hardware &mdash; POSEIDON T-Embed">
+<meta property="og:description" content="Verified pin map for the LilyGO T-Embed CC1101 Plus, the shared-SPI reality, and a comparison against the Cardputer.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://generaldussduss.github.io/poseidon-tembed/assets/og.png">
+<meta name="theme-color" content="#06121f">
+<link rel="icon" href="assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.te-accent{color:#22d3ee}
+.te-panel{border:1px solid rgba(34,211,238,.32);border-radius:18px;background:linear-gradient(135deg,rgba(34,211,238,.08) 0%,rgba(14,165,233,.04) 100%);backdrop-filter:blur(6px);position:relative;overflow:hidden;padding:clamp(1.5rem,3vw,2.2rem)}
+.te-panel .glow{position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(34,211,238,.22) 0%,transparent 70%);pointer-events:none}
+.te-mono{font-family:var(--font-mono);font-size:.82rem;line-height:1.75;background:rgba(6,10,22,.6);border:1px solid rgba(34,211,238,.25);border-radius:12px;padding:1rem 1.2rem;color:#94a3b8;overflow-x:auto}
+.te-mono .g{color:#6ee7b7;font-weight:700}.te-mono .w{color:#fbbf24;font-weight:700}.te-mono .c{color:#22d3ee}
+.te-compare{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:1.5rem}
+.te-compare th,.te-compare td{text-align:left;padding:.7rem .9rem;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+.te-compare thead th{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#64748b}
+.te-compare tbody td:first-child{color:#cbd5e1;font-weight:500;width:26%}
+.te-compare .te-col{color:#7dd3fc}.te-compare .cp-col{color:#a3b4cf}
+.te-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1.5rem}
+.te-status{background:linear-gradient(180deg,var(--bg-raised),var(--bg-card));border:1px solid rgba(34,211,238,.12);border-radius:14px;padding:1.4rem 1.5rem;position:relative;overflow:hidden}
+.te-status::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%}
+.te-status.ready::before{background:#22c55e;box-shadow:0 0 12px rgba(34,197,94,.4)}
+.te-status.bring::before{background:#fbbf24;box-shadow:0 0 12px rgba(251,191,36,.4)}
+.te-status .st{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.te-status.ready .st{color:#22c55e}.te-status.bring .st{color:#fbbf24}
+.te-status h4{font-family:var(--font-display);font-size:1rem;color:#e2e8f0;margin-bottom:.5rem;letter-spacing:.03em}
+.te-status p{font-size:.9rem;color:#a3b4cf;line-height:1.55}
+.spec-row{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.9rem}
+.spec-row .k{color:#cbd5e1;font-weight:500}
+.spec-row .v{color:#7dd3fc;font-family:var(--font-mono);font-size:.82rem;text-align:right}
+#videoSplash{position:fixed;inset:0;z-index:10001;background:#000;display:flex;align-items:center;justify-content:center;opacity:1;transition:opacity .6s ease}
+#videoSplash.done{opacity:0;pointer-events:none}
+#videoSplash video,#videoSplash img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block}
+#splashSkip{position:fixed;bottom:18px;right:18px;z-index:10002;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.16em;color:#7dd3fc;background:rgba(4,10,20,.6);border:1px solid rgba(34,211,238,.5);border-radius:8px;padding:.4rem .8rem;cursor:pointer;opacity:.7}
+#splashSkip:hover{opacity:1;box-shadow:0 0 14px rgba(34,211,238,.35)}
+@media(prefers-reduced-motion:reduce){#videoSplash{display:none}}
+</style>
+</head>
+<body data-matrix>
+
+<div id="bootOverlay">
+  <div class="boot-trident">&#128305;</div>
+  <div class="boot-logo">T-EMBED</div>
+  <div class="boot-lines"><div class="boot-line"><span class="dim">[BOOT]</span> one board, every radio <span class="ok">OK</span></div></div>
+</div>
+
+<div id="scrollProgress"></div>
+<div id="hud"><div class="hud-row"><span class="hud-dot"></span>T-EMBED CC1101 PLUS &middot; 5 RADIOS ONBOARD</div></div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo"><span class="icon">P</span><span>POSEIDON &middot; T-EMBED</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="nfc.html">NFC</a></li>
+    <li><a href="radios.html">Radios</a></li>
+    <li><a href="encoder.html">Encoder</a></li>
+    <li><a href="hardened.html">Hardened</a></li>
+    <li><a href="hardware.html" class="active">Hardware</a></li>
+    <li><a href="status.html">Status</a></li>
+    <li><a href="flash/">Flash</a></li>
+    <li><a href="https://generaldussduss.github.io/poseidon/" target="_blank" rel="noopener">Cardputer</a></li>
+    <li><a href="https://github.com/GeneralDussDuss/poseidon" target="_blank" rel="noopener">GitHub</a></li>
+  </ul>
+</nav>
+
+<header class="page-head">
+  <div class="kicker">05 // THE BOARD</div>
+  <h1>Verified hardware</h1>
+  <p class="lede">Every value here comes from the firmware's own pin map for this board, cross-checked against LilyGO's sources. Nothing is aspirational.</p>
+</header>
+
+<section>
+  <div class="hw-grid">
+    <div class="hw-card reveal">
+      <h3>Core <span class="chip" style="color:#22d3ee;border-color:rgba(34,211,238,.4);">ESP32-S3</span></h3>
+      <div class="spec-row"><span class="k">MCU</span><span class="v">ESP32-S3 + PSRAM</span></div>
+      <div class="spec-row"><span class="k">Display</span><span class="v">ST7789 170&times;320, landscape</span></div>
+      <div class="spec-row"><span class="k">Input</span><span class="v">encoder + SELECT + BACK</span></div>
+      <div class="spec-row"><span class="k">Storage</span><span class="v">microSD, shared SPI</span></div>
+      <div class="spec-row"><span class="k">Power gate</span><span class="v">GPIO15 held HIGH</span></div>
+    </div>
+    <div class="hw-card reveal">
+      <h3>Radios <span class="chip" style="color:#22d3ee;border-color:rgba(34,211,238,.4);">ONBOARD</span></h3>
+      <div class="spec-row"><span class="k">Sub-GHz</span><span class="v">CC1101, ~300-928 MHz</span></div>
+      <div class="spec-row"><span class="k">Band select</span><span class="v">SW0 / SW1 switched</span></div>
+      <div class="spec-row"><span class="k">2.4 GHz</span><span class="v">nRF24L01+ (Plus SKU)</span></div>
+      <div class="spec-row"><span class="k">NFC</span><span class="v">PN532, I2C 0x24</span></div>
+      <div class="spec-row"><span class="k">IR</span><span class="v">TX + RX</span></div>
+    </div>
+    <div class="hw-card reveal">
+      <h3>Extras <span class="chip" style="color:#22d3ee;border-color:rgba(34,211,238,.4);">EVERYTHING ELSE</span></h3>
+      <div class="spec-row"><span class="k">LED ring</span><span class="v">WS2812B &times;8</span></div>
+      <div class="spec-row"><span class="k">Audio</span><span class="v">NS4168 I2S speaker</span></div>
+      <div class="spec-row"><span class="k">Mic</span><span class="v">PDM</span></div>
+      <div class="spec-row"><span class="k">Battery</span><span class="v">BQ25896 + BQ27220</span></div>
+      <div class="spec-row"><span class="k">SPI clock</span><span class="v">40 MHz (vendor value)</span></div>
+    </div>
+  </div>
+
+  <div class="te-panel reveal" style="margin-top:1.5rem;max-width:880px;border-color:rgba(251,191,36,.3);background:rgba(251,191,36,.05);">
+    <div style="font-family:var(--font-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#fbbf24;margin-bottom:.5rem;">&#9650; TWO REAL CAVEATS, STATED UP FRONT</div>
+    <p style="font-size:.95rem;line-height:1.6;color:#cbd5e1;margin:0;">The nRF24 chip-select pins are triple-booked with UART0 and the external header, so serial logging and 2.4 GHz traffic can interfere, and LilyGO's own issue tracker notes some Plus units losing nRF range over time. And because the SD card, the CC1101 and the nRF24 all share one SPI bus with the display, every driver has to cooperate on that bus rather than assume it owns it &mdash; a lesson this port learned the hard way.</p>
+  </div>
+
+  <h2 class="section-title reveal" style="margin-top:3rem;">T-Embed CC1101 Plus vs Cardputer-Adv</h2>
+  <p class="section-desc reveal">One codebase, selected at build time. What changes is the shell around it.</p>
+  <div class="hw-card reveal" style="max-width:920px;">
+    <table class="te-compare">
+      <thead><tr><th></th><th>T-Embed CC1101 Plus</th><th>Cardputer-Adv</th></tr></thead>
+      <tbody>
+        <tr><td>Display</td><td class="te-col">1.9 inch, 320&times;170</td><td class="cp-col">1.14 inch, 240&times;135</td></tr>
+        <tr><td>Input</td><td class="te-col">Rotary encoder + 2 buttons</td><td class="cp-col">Full QWERTY</td></tr>
+        <tr><td>Sub-GHz</td><td class="te-col">Onboard CC1101</td><td class="cp-col">Hydra hat</td></tr>
+        <tr><td>2.4 GHz nRF24</td><td class="te-col">Onboard (Plus SKU)</td><td class="cp-col">Hydra hat</td></tr>
+        <tr><td>NFC</td><td class="te-col">Onboard PN532</td><td class="cp-col">None</td></tr>
+        <tr><td>IR</td><td class="te-col">TX + RX onboard</td><td class="cp-col">TX onboard</td></tr>
+        <tr><td>LoRa + GNSS</td><td class="cp-col">Not onboard</td><td class="te-col">LoRa hat</td></tr>
+        <tr><td>Wired Ethernet</td><td class="cp-col">Not onboard</td><td class="te-col">W5500 hat</td></tr>
+        <tr><td>Extras</td><td class="te-col">RGB ring, fuel gauge</td><td class="cp-col">Speaker, mic</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="reveal" style="max-width:880px;margin:1.5rem 0 0;color:#94a3b8;font-size:.95rem;">Neither wins outright. The Cardputer keeps a real keyboard and reaches LoRa, GNSS and wired Ethernet through hats. The T-Embed folds sub-GHz, 2.4 GHz, NFC and IR onto one board and adds a fuel gauge. Pick the body the mission wants.</p>
+</section>
+
+
+<footer>
+  <div class="foot-glyph">&#10208;</div>
+  <div class="suite-label">PART OF THE SUITE</div>
+  <div class="suite-links">
+    <a href="https://generaldussduss.github.io/poseidon/">POSEIDON (CARDPUTER)</a>
+    <a href="https://generaldussduss.github.io/suite/">THE SUITE</a>
+    <a href="https://generaldussduss.github.io/faceless/">FACELESS</a>
+  </div>
+  <div class="copy">&copy; 2026 POSEIDON T-EMBED &mdash; commander of the deep &mdash; MIT</div>
+</footer>
+
+<canvas id="particles" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></canvas>
+<script src="assets/site.js"></script>
+</body>
+</html>
